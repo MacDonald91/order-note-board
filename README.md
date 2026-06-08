@@ -1,58 +1,197 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Order Note Board
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+Order Note Board is a simple internal web application built using Laravel, PHP, JavaScript and SQLite.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The application allows warehouse staff to create and view notes against customer order numbers. It was designed as a lightweight internal tool that helps teams communicate important information such as packaging issues, priority orders and special handling requirements.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project was developed as part of the Darkside Developments Junior Web Developer Technical Test.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Application Screenshot
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Insert screenshot here:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<img width="1042" height="467" alt="image" src="https://github.com/user-attachments/assets/b11f298d-11a8-4846-b540-ff48d2a0bc9c" />
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Features
 
-```bash
-composer require laravel/boost --dev
+### Backend
 
-php artisan boost:install
+* Laravel REST API
+* Create new notes
+* Retrieve all notes
+* SQLite database storage
+* Eloquent ORM
+* Input validation
+* JSON responses
+
+### Frontend
+
+* Single-page interface
+* Submit new notes without page reload
+* Display all existing notes
+* Dynamic updates using JavaScript Fetch API
+
+---
+
+## Database Structure
+
+The application stores notes in a relational database table called `notes`.
+
+| Field        | Type      |
+| ------------ | --------- |
+| id           | Integer   |
+| order_number | String    |
+| author       | String    |
+| message      | Text      |
+| created_at   | Timestamp |
+| updated_at   | Timestamp |
+
+---
+
+## API Endpoints
+
+### Retrieve All Notes
+
+GET
+
+/api/notes
+
+Returns all notes stored in the database.
+
+---
+
+### Create Note
+
+POST
+
+/api/notes
+
+Example Request:
+
+```json
+{
+  "order_number": "ORD-1042",
+  "author": "Ally",
+  "message": "Priority packaging issue"
+}
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Example Response:
 
-## Contributing
+```json
+{
+  "id": 1,
+  "order_number": "ORD-1042",
+  "author": "Ally",
+  "message": "Priority packaging issue"
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Technologies Used
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* Laravel
+* PHP
+* SQLite
+* JavaScript
+* HTML
+* Git
+* GitHub
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Development Approach
 
-## License
+Before beginning development, I reviewed the project requirements and created a simple development plan covering:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* Requirements analysis
+* Database design
+* API design
+* Frontend structure
+* Testing strategy
+
+I chose to build and test the API before creating the frontend. This allowed me to verify that the routes, controller logic and database functionality were working correctly before integrating the user interface.
+
+The application follows Laravel's MVC architecture:
+
+* Migration for database creation
+* Eloquent Model for data access
+* Controller for business logic
+* API Routes for communication
+* JavaScript frontend consuming the API
+
+---
+
+## Testing
+
+### API Testing
+
+Initial GET request:
+
+GET /api/notes
+
+Expected Result:
+
+```json
+[]
+```
+
+When no notes exist.
+
+---
+
+### Create Note Test
+
+POST /api/notes
+
+```json
+{
+  "order_number": "ORD-1042",
+  "author": "Ally",
+  "message": "Priority packaging issue"
+}
+```
+
+Expected Result:
+
+The note is successfully stored and returned as JSON.
+
+---
+
+### Frontend Testing
+
+The following functionality was tested:
+
+* Create note
+* Retrieve notes
+* Validation checks
+* Dynamic page updates without page refresh
+
+---
+
+## Future Improvements
+
+Given additional development time, I would consider implementing:
+
+* Search and filtering by order number
+* Edit note functionality
+* Delete note functionality
+* Improved responsive styling
+* User authentication
+* Pagination for larger datasets
+
+---
+
+## Author
+
+Alasdair MacDonald
+
+GitHub: https://github.com/MacDonald91
